@@ -1,0 +1,484 @@
+
+<html>
+
+
+
+
+  <head>
+  <script>console.log("version 1.0" + 7)</script>
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <script src="https://unpkg.com/merge-images"></script>
+  <script src="/scripts/capture-video-frame.js"></script>
+  <script src="/scripts/xmas_card.js"></script>
+  <script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
+<script src="https://rawgit.com/mayognaise/aframe-gif-component/master/dist/aframe-gif-component.min.js"></script>
+
+    <link rel="stylesheet" href="index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-67916101-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-67916101-1');
+</script>
+
+
+  </head>
+
+
+
+
+
+
+  <body style="margin : 0px; overflow: hidden;">
+
+
+  <div class="xload" style="  height: 100vh; text-align: center; padding-top: 150px; background: url('/graphics/loading-head.svg') center top/contain no-repeat;
+  background-color: ffffff;z-index: 9999;">
+    <div><img id="xload-img" src="/graphics/gift-box.gif" alt="" style="z-index: 9999"></div>
+    <div class="xload__bar" style="z-index: 9999">
+    <!-- modify these styles to reflect loading progress from 0 to 100% -->
+      <span id="xload__bar_progress" style="width: 1%"></span>
+    </div>
+  </div>
+<div id="postload" style="display: none">
+  <div id="cursorContainer">
+
+    <div id="scanInstructions">
+      <img id="scanCursor" id="scanID">
+      <p id="scanInstructionText">Make sure you are in a well-lit environment and<br>press <b>Scan</b> to start</p>
+    </div>
+    <div id="selfieInstructions">
+      <p id="selfieInstructionText">Get ready for a photo with <b>Santa</b></p>
+    </div>
+  </div>
+
+
+ <!--  <div id="tapInstructions">
+    <img id="tapIcon">
+    <p id="instructionText">Position the card in a well-lit environment and press Scan.</p>
+  </div> -->
+
+  <div id="audioIconContainer" style=" z-index: 9999">
+   <div id="audioIcon" class="audioOff" style="z-index: 9999"></div>
+  </div>
+    <div id="endSceneButton" style="display: none; z-index: 9999"></div>
+            <div id="scanButton" style="z-index:9999">
+          <p id="scanButtonText">SCAN</p>
+        </div>
+                    <div id="cancelButton" style="display: none;z-index:9999">
+          <p id="cancelButtonText">CANCEL</p>
+        </div>
+  <div id="photoModeContainer" style=" z-index: 9999">
+
+    <div id="photoModeBG"></div>
+    <img id="photoModeImage">
+    <div id="flash"></div>
+    <div id="shutterButton" style="z-index:9999"></div>
+    <div id="closeButton"></div>
+
+
+    <div id="photoPrompts">
+        <p id="shareBlurb" style="z-index:11">Tap and hold to save the picture!</span></p>
+        <p id="shareBlurbAlt" style="z-index:11">Tap and hold to save the picture!</p>
+        <div id="shareButton" style="z-index:11">
+          <p id="shareButtonText">SHARE</p>
+        </div>
+
+        <div id="retakeButton" style="z-index:11">
+          <p>RETAKE</p>
+        </div>
+
+    </div>
+    <div id="selfieContainer" style="display: none; z-index: 10">
+      <img id="santaSelfie" src='/graphics/SantaSelfie.gif'></div>
+    </div>
+  </div>
+
+    <!-- <div class="xblink">
+  get .xblink__widget as a container, and add .xblink--active to get a blink effect (you can remove and add the class again to start the animation)
+  <div id="cameraflash" class="xblink__widget"></div> -->
+  <div class="flash" style="
+    position: fixed;
+    left: 0;
+    top: 0;
+    width:100%;
+    height:100%;
+    background-color: #fff;
+    opacity: 0;" ></div>
+</div>
+
+      <div class="xdis" style="display: none; z-index: 9999">
+      <div class="xdis__widget">
+        <div class="xdis__title">Discard Photo?</div>
+        <p>If you go back now, you will lose your photo</p>
+        <div class="xdis__button">
+          <div id="discardButton" class="xm__button xm__button--outline" style="z-index: 9999">Discard</div>
+          <div id="keepButton" class="xm__button" style="z-index: 9999">Keep</div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div style="  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9998;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: 200% auto, auto 100%, contain;
+  background-repeat: no-repeat;">
+  
+
+    <div id="markerLostInstructions" style=" display: none;
+  position: absolute;
+  color: white;
+  font-size: 1em;
+  line-height: 1.5;
+  text-align: center;
+  bottom: 20%;
+  width: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  z-index: 1;">
+
+      <p id="markerLostInstructionText" style="  background-color: black;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 7%/95%;">Did you lose Santa?<br>Try to re-focus camera on the marker.</p>
+    </div>
+
+</div>
+
+
+
+  <a-scene
+      device-orientation-permission-ui="enabled: false"
+      vr-mode-ui='enabled: false;'
+      toggle-audio
+      screenshot="width: 1024; height: 1024;"
+      photo-mode
+      renderer="logarithmicDepthBuffer: true;"
+      embedded arjs='trackingMethod: best; sourceType: webcam; debugUIEnabled: false;'
+      loading-xmas
+      >
+
+
+        <a-assets timeout="20000">
+          <a-asset-item id="s1_santa" src="/models/scene1_santa.glb"></a-asset-item>
+          <a-asset-item id="s1_sink" src="/models/scene1_sink.glb"></a-asset-item>
+          <a-asset-item id="s3" src="/models/scene3_santa.glb"></a-asset-item>
+          <a-asset-item id="s3_bubble" src="/models/scene3_bubble.glb"></a-asset-item>
+          <a-asset-item id="s3_furniture" src="/models/scene3_furniture.glb"></a-asset-item>
+          <a-asset-item id="s4_santa" src="/models/scene4_santa.glb"></a-asset-item>
+          <a-asset-item id="s4_sink" src="/models/scene4_sink.glb"></a-asset-item>
+          <a-asset-item id="s4_thoughts" src="/models/scene4_thoughts.glb"></a-asset-item>
+          <a-asset-item id="s4_cookie" src="/models/scene4_cookie.glb"></a-asset-item>
+          <a-asset-item id="s6_santa" src="/models/scene6_santa.glb"></a-asset-item>
+          <a-asset-item id="s6_chair" src="/models/scene6_chair.glb"></a-asset-item>
+          <a-asset-item id="s6_elf" src="/models/scene6_elf.glb"></a-asset-item>
+          <a-asset-item id="s6_gifts" src="/models/scene6_gifts.glb"></a-asset-item>
+          <a-asset-item id="s6_phone" src="/models/scene6_phone.glb"></a-asset-item>
+          <a-asset-item id="s6_bubble" src="/models/scene6_bubble.glb"></a-asset-item>
+          <a-asset-item id="s11_santa" src="/models/scene11_santa.glb"></a-asset-item>
+          <a-asset-item id="s11_phone" src="/models/scene11_phone.glb"></a-asset-item>
+          <a-asset-item id="gift_1" src="/models/Gift_1.glb"></a-asset-item>
+          <a-asset-item id="gift_3" src="/models/Gift_3.glb"></a-asset-item>
+          <a-asset-item id="gift_4" src="/models/Gift_4.glb"></a-asset-item>
+          <a-asset-item id="gift_6" src="/models/Gift_6.glb"></a-asset-item>
+          <a-asset-item id="gift_11" src="/models/Gift_11.glb"></a-asset-item>
+          <img preload id="laptop_video" src="/videos/scene3.gif">
+          <img preload id="phone_video" src="/videos/scene6.gif">
+          <img id="scanbox" src="/graphics/scan.png">
+        </a-assets> 
+
+
+
+        <a-sound id="song" loop="true" volume="0"></a-sound> 
+        <a-sound id="scene1_audio" src="url(/audio/scene1.mp3)" class="audio" volume="0"></a-sound> 
+        <a-sound id="scene3_audio" class="audio" src="url(/audio/scene3.mp3)" volume="0"></a-sound> 
+        <a-sound id="scene4_audio" class="audio" src="url(/audio/scene4.mp3)" volume="0"></a-sound> 
+        <a-sound id="scene6_audio" class="audio" src="url(/audio/scene6.mp3)" volume="0"></a-sound> 
+        <a-sound id="scene11_audio" class="audio" src="url(/audio/scene11.mp3)" volume="0"></a-sound> 
+
+        <a-marker class="marker" id="marker_scene1" preset="custom" type="pattern" url="/markers/1.patt" size=".03">
+
+
+        <a-entity
+                class="gift"
+                id='box1'
+                scale="0.4 0.4 0.4"
+                position='0 0 0'
+                gltf-model='#gift_1'
+        >
+                  <a-box  position='0 0.875 0' scale="1.75 1.75 1.75" opacity='0' start-animation='name: scene1; audio_src: "url(/audio/scene1.mp3)"; length: 18000'></a-box>
+        </a-entity>
+
+
+
+
+   
+              <a-entity class="scene" id='scene1' scale=".65 .65 .65"
+              visible="false">
+                <a-entity
+                  class = "scene1_model"
+                  rotation="0 0 0"
+                  gltf-model="#s1_santa"
+                  animation__turn_1="startEvents: start_scene1; pauseEvents: restart_scene1; property: rotation; from: 0 0 0; to: 0 -90 0; dur: 2000; easing: easeInOutSine; delay: 6500; autoplay: false"
+                  animation__restart_rotation="startEvents: restart_scene1; property: rotation; dur: 1;to: 0 0 0; easing: easeInOutSine; autoplay: false"
+                  animation-mixer="clip: ''"
+                  >
+                </a-entity>
+
+                <a-entity
+                    class = "scene1_model"
+                    gltf-model='#s1_sink'
+                    scale="0 0 0"
+                    rotation = "0 90 0"
+                    position = "-1.5 0 3"
+                    animation__scale="startEvents: start_scene1; pauseEvents: restart_scene1; property: scale; from: 0 0 0; to: 1 1 1; dur: 250; easing: easeOutSine; delay: 8250; autoplay: false"
+                    ></a-entity>
+              </a-entity>
+
+
+          </a-marker>
+          <a-marker class="marker" id="marker_scene3" preset="custom" type="pattern" url="/markers/3.patt" size=".03">
+            <a-entity    
+                  class="gift"              
+                  gltf-model='#gift_3'
+                  scale="0.4 0.4 0.4">
+              <a-box  position='0 0.5 0' scale="2 2 2" material='opacity: 0;' start-animation='name: scene3; audio_src: "url(/audio/scene3.mp3)";video: true; length: 45000'>
+              </a-box>
+            </a-entity>
+
+
+              <a-entity class="scene" id="scene3"  visible="false">
+                <a-entity class="scene3_model"
+                  gltf-model='#s3' scale=".5 .5 .5" animation-mixer="clip:''" rotation="0 0 0">
+                </a-entity>
+                <a-entity id="furniture"
+                  gltf-model='#s3_furniture' scale=".4 .4 .4"  rotation="0 0 0">
+                </a-entity>
+                <a-entity gltf-model="#s3_bubble" scale=".5 .5 .5" position="0 1.65 .34"></a-entity>
+                <a-entity id="scene3_gif" autoplay="false" position="0 2.25 .4" geometry="primitive: plane; height: 1; width: 1.5" material="shader:gif;src:url(/videos/scene3.gif);autoplay: false" gif=""></a-entity>
+<!--                 <a-entity position= "0 2.25 .4" scale="1.5 1 1">
+                  <a-video class="video_with_sound" id="laptop_video" src="#s3_video"></a-video>
+                </a-entity> -->
+              </a-entity>
+          </a-marker>
+          <a-marker class="marker" id="marker_scene4" preset="custom" type="pattern" url="/markers/4.patt" size=".03">
+
+
+            <a-entity class="gift" gltf-model='#gift_4'
+                scale="0.4 0.4 0.4">
+                <a-box  position='0 0.5 0' scale="2 2 2" material='opacity: 0;' start-animation='name: scene4; audio_src: "url(/audio/scene4.mp3)"; length: 25000'></a-box>
+
+            </a-entity>
+
+              <a-entity class="scene" id='scene4'
+                
+                visible="false"
+                scale="0.666 0.666 0.666"
+                rotation='0 0 0'
+              >
+                 <a-entity
+                          class = "scene4_model"
+                          position="1.5 0 0"
+                          rotation="0 270 0"
+                          scale=".7 .7 .7"
+                          gltf-model="#s4_sink"
+                          animation__scale="startEvents: start_scene4; pauseEvents: restart_scene4; property: scale; dur: 500; from: .7 .7 .7; to: 0 0 0 ; easing: easeInOutSine; delay: 6000"
+                          animation__restartscale="startEvents: restart_scene4; property: scale; dur: 1000; from: 0 0 0; to: .7 .7 .7; easing: easeInOutSine; autoplay: false"
+                          >
+                  </a-entity>
+                  <a-entity
+                          class = "scene4_model"
+                          position="0 0 0"
+                          rotation="0 90 0"
+                          gltf-model="#s4_santa"
+                          animation__turnaround="startEvents: start_scene4; pauseEvents: restart_scene4; property: rotation; dur: 500; from: 0 90 0; to: 0 0 0; easing: easeInOutSine; delay: 5500"
+                          animation__restartrotation="startEvents: restart_scene4; property: rotation; dur: 1000; to: 0 90 0; easing: easeInOutSine; autoplay: false"
+                          animation-mixer="clip: ''"
+                          >
+                  </a-entity>
+                  <a-entity
+                          class = "scene4_model"
+                          gltf-model="#s4_cookie"
+                          scale = "0 0 0"
+                          position=".46 1.4 .89"
+                          rotation="0 0 0"
+                          animation__scale="startEvents: start_scene4; pauseEvents: restart_scene4; property: scale; dur: 500; from: 0 0 0; to: 1.37 .69 1.37; easing: easeInOutSine; delay: 6800"
+                          animation__moveup="startEvents: start_scene4; pauseEvents: restart_scene4; property: position; dur: 1250; from: .46 1.4 .89; to: .51 1.89 0.909; easing: easeInOutSine; delay: 7100"
+                          animation__pump1="startEvents: start_scene4; pauseEvents: restart_scene4; property: position; dur: 750; from: .51 1.89 0.909; to: .51 1.84 0.909; easing: easeInOutSine; delay: 8700"
+                          animation__pump1d="startEvents: start_scene4; pauseEvents: restart_scene4; property: position; dur: 600; from: .51 1.84 0.909; to: .51 1.89 0.909; easing: easeInOutSine; delay: 8900"
+                          animation__pump2="startEvents: start_scene4; pauseEvents: restart_scene4; property: position; dur: 600; from: .51 1.89 0.909; to: .51 1.84 0.909; easing: easeInOutSine; delay: 9900"
+                          animation__pump2d="startEvents: start_scene4; pauseEvents: restart_scene4; property: position; dur: 600; from: .51 1.84 0.909; to: .51 1.89 0.909; easing: easeInOutSine; delay: 10600"
+                          animation__pump3="startEvents: start_scene4; pauseEvents: restart_scene4; property: position; dur: 600; from: .51 1.89 0.909; to: .51 1.84 0.909; easing: easeInOutSine; delay: 11600"
+                          animation__pump3d="startEvents: start_scene4; pauseEvents: restart_scene4; property: position; dur: 600; from: .51 1.84 0.909; to: .51 1.89 0.909; easing: easeInOutSine; delay: 12300"
+                          animation__movedown="startEvents: start_scene4; pauseEvents: restart_scene4; property: position; dur: 2000; from: .51 1.89 0.909; to: .46 1.4 1.1; easing: easeInOutSine; delay: 13500"
+                          animation__scaledown="startEvents: start_scene4; pauseEvents: restart_scene4; property: scale; dur: 1000; from: 1.37 .69 1.37; to: 0 0 0; easing: easeInOutSine; delay: 14000"
+                          animation__restart_position="startEvents: restart_scene4; property: position; dur: 1000; to: .46 1.4 .89; easing: easeInOutSine; autoplay: false"
+                          >
+                  </a-entity>
+                
+                  <a-entity
+                          class = "scene4_model"
+                          gltf-model="#s4_thoughts"
+                          position = ".8 1.8 -.5"
+                          scale="0 0 0"
+                          animation__scaleup="startEvents: start_scene4; pauseEvents: restart_scene4; property: scale; dur: 1000; from: 0 0 0; to: 1 1 1; easing: easeInOutElastic; delay: 9000"
+                          animation__restart="startEvents: restart_scene4; property: scale; dur: 1000; from: 1 1 1; to: 0 0 0; easing: easeInOutElastic; autoplay: false">
+                  </a-entity>
+                          
+
+              </a-entity>
+          </a-marker>
+          <a-marker class="marker" id="marker_scene6" preset="custom" type="pattern" url="/markers/6.patt" size=".03">
+            <a-entity   
+            class="gift"
+            gltf-model='#gift_6'
+                  scale="0.3 0.3 0.3">
+              <a-box  position='0 1.5 0' scale="2 3 2" material='opacity: 0;' start-animation='name: scene6; audio_src: "url(/audio/scene6.mp3)"; video: true; length: 30000'></a-box>
+            </a-entity>
+
+
+
+              <a-entity class="scene" id='scene6'
+                rotation='0 0 0'
+                scale="0.45 0.45 0.45"
+                visible="false"
+              >
+                <a-entity id="santa"
+                  gltf-model="#s6_santa"
+                  class="scene6_model"
+                  position="0 .5 0"
+                  rotation="0 0 0"
+                  animation__turn="startEvents: start_scene6; pauseEvents: restart_scene6; property: rotation; dur: 3000; from: 0 0 0; to: 0 20 0; easing: easeInOutQuad; delay: 19000; autoplay: false"
+                  animation__restart="startEvents: restart_scene6; property: rotation; dur: 50; from: 0 20 0; to: 0 0 0; easing: easeInOutQuad; autoplay: false"
+                  animation-mixer="clip: ''">
+                    <a-entity id="phone"  position="0.7366 0.61112 -1.5423" rotation="43.213049866561825 -108.38528018930757 -102.82071408299701" animation__scale="startEvents: start_scene6; pauseEvents: restart_scene6; property: scale; dur: 500; from: 0 0 0; to: 0.2 0.4 0.05; easing: easeInOutQuad; delay: 1000"
+                    animation__retart="startEvents: restart_scene6; property: scale; dur: 500; from: 0.2 0.4 0.05; to: 0 0 0; easing: easeInOutQuad; delay: 1000">
+
+                    </a-entity>
+                </a-entity>
+                <a-entity id="chair"
+                          class="scene6_model"
+                          gltf-model="#s6_chair"
+                          rotation="0 0 0">
+                </a-entity>
+                <a-entity position="2 0 1" 
+                  animation__grabandturn="startEvents: start_scene6; pauseEvents: restart_scene6; property: rotation; dur: 1000; from: 0 0 0; to: 0 -180 0; easing: easeInOutQuad; delay: 24000;" 
+                  animation__walkaway="startEvents: start_scene6; pauseEvents: restart_scene6; property: position; dur: 3000; from: 2 0 1; to: 2 0 4; easing: easeInOutQuad; delay: 25000;" 
+                  animation__disappear="startEvents: start_scene6; pauseEvents: restart_scene6; property: scale; dur: 100; from: 1 1 1; to: 0 0 0; easing: easeInOutQuad; delay: 27800;"
+                  animation__restart="startEvents: restart_scene6; property: position; dur: 100; from: 2 0 4; to: 2 0 1; easing: easeInOutQuad;"
+                  animation__restart_rotation="startEvents: restart_scene6; property: rotation; dur: 100; from: 0 -180 0; to: 0 0 0; easing: easeInOutQuad;"
+                  animation__restart_scale="startEvents: restart_scene6; property: scale; dur: 100; from: 0 0 0; to: 1 1 1; easing: easeInOutQuad;">
+                    <a-entity id="gifts" position="0 0 -1"
+                              class="scene6_model"
+                              gltf-model="#s6_gifts">
+                    </a-entity>
+                </a-entity>
+
+                  <a-entity id="elf"
+                      gltf-model="#s6_elf"
+                      class="scene6_model"
+                      position="2 0 4"
+                      rotation="90 180 0"
+                      scale="0 0 0"
+                      animation__appear="startEvents: start_scene6; pauseEvents: restart_scene6; property: scale; dur: 100; from: 0 0 0; to: 1 1 1; easing: easeInOutQuad; delay: 20000;"
+                      animation__walktopresents="startEvents: start_scene6; pauseEvents: restart_scene6; property: position; dur: 3000; from: 2 0 4; to: 2 0 1; easing: easeInOutQuad; delay: 20000;"
+                      animation__grabandturn="startEvents: start_scene6; pauseEvents: restart_scene6; property: rotation; dur: 1000; from: 90 180 0; to: 90 0 0; easing: easeInOutQuad; delay: 24000;"
+                      animation__walkaway="startEvents: start_scene6; pauseEvents: restart_scene6; property: position; dur: 3000; from: 2 0 1; to: 2 0 4; easing: easeInOutQuad; delay: 25000;"
+                      animation__disappear="startEvents: start_scene6; pauseEvents: restart_scene6; property: scale; dur: 100; from: 1 1 1; to: 0 0 0; easing: easeInOutQuad; delay: 27800;"
+                      animation__restart="startEvents: restart_scene6; property: rotation; dur: 50; from: 90 0 0; to: 90 180 0; easing: easeInOutQuad; autoplay: false"
+                      animation-mixer="clip: ''"
+                      >
+                  </a-entity>
+                  <a-entity id="bubble"
+                      class="scene6_model"
+                      gltf-model="#s6_bubble"
+                      animation__appear="startEvents: start_scene6; pauseEvents: restart_scene6; property: scale; dur: 500; from: 0 0 0; to: 1 1 1; easing: easeInOutQuad; delay: 1000;"
+                      animation__disappear="startEvents: start_scene6; pauseEvents: restart_scene6; property: scale; dur: 500; from: 1 1 1; to: 0 0 0; easing: easeInOutQuad; delay: 29000;"
+                      >
+                    <a-entity id="scene6_gif" autoplay="false" position="0 4.57 -.657" geometry="primitive: plane; height: 2; width: 1.5" material="shader:gif;src:url(/videos/scene6.gif);autoplay: false" gif=""></a-entity>
+<!--                     <a-entity position= "0 4.57 -.657" scale="1.75 2.25 1">
+                      <a-video class="video_with_sound" id="phone_video" src="#s6_video"></a-video>
+                    </a-entity> -->
+                  </a-entity>
+              </a-entity>
+          </a-marker>
+          <a-marker class="marker" id="marker_scene11" preset="custom" type="pattern" url="/markers/11.patt" size=".03">
+        <a-entity
+          class="gift" 
+          gltf-model='#gift_11'
+          scale="0.25 0.25 0.25">
+            <a-box position='0 0.5 0' scale="1.5 1.5 1.5" material='opacity: 0;' start-animation='name: scene11; audio_src: "url(/audio/scene11.mp3)"; length: 10500; selfie: true'> </a-box>
+
+        </a-entity>
+
+              <a-entity class="scene" id='scene11'
+                scale="0.666 0.666 0.666"
+                visible="false"
+              >
+                <a-entity
+                gltf-model='#s11_santa'
+                class="scene11_model"
+                animation-mixer="clip: ''"
+                rotation='0 0 0'></a-entity>
+                <a-entity
+                gltf-model='#s11_phone'
+                animation-mixer="clip: ''"
+                position='0 0 3'
+                rotation='0 0 0'></a-entity>
+              </a-entity>
+          </a-marker>
+
+
+          <a-entity id="fuseCursor" camera dynamic-cursor>
+
+          </a-entity>
+        </a-scene>
+        <script>
+          var progress = 0;
+            function loadProgress(percent) {
+              var el = document.getElementById("xload__bar_progress")
+              if (progress <= 100) {
+                progress += percent
+                el.style.width = progress.toString()+ "%"
+              }
+            }
+            document.getElementById('gift_1').addEventListener('loaded', function() { 
+              console.log("Gift 1 loaded") 
+              loadProgress(10)
+            })
+            document.getElementById('gift_3').addEventListener('loaded', function() { console.log("Gift 3 loaded")
+            loadProgress(10) })
+            document.getElementById('gift_4').addEventListener('loaded', function() { console.log("Gift 4 loaded")
+            loadProgress(10) })
+            document.getElementById('gift_6').addEventListener('loaded', function() { console.log("Gift 6 loaded")
+            loadProgress(10) })
+            document.getElementById('gift_11').addEventListener('loaded', function() { console.log("Gift 11 loaded")
+            loadProgress(10) })
+            document.getElementById('s1_santa').addEventListener('loaded', function() { console.log("s 1 loaded")
+            loadProgress(8) })
+            document.getElementById('s3').addEventListener('loaded', function() { console.log("s 3 loaded")
+            loadProgress(8) })
+            document.getElementById('s4_santa').addEventListener('loaded', function() { console.log("s 4 loaded")
+            loadProgress(8) })
+            document.getElementById('s6_santa').addEventListener('loaded', function() { console.log("s 6 loaded")
+            loadProgress(8) })
+            document.getElementById('s11_santa').addEventListener('loaded', function() { console.log("s 11 loaded")
+            loadProgress(8) })
+</script> 
+    </body>
+</html>

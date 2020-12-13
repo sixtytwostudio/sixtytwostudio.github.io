@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>ic_close@1x</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop" transform="translate(-1366.000000, -365.000000)">
+            <g id="ic_close" transform="translate(1366.000000, 365.000000)">
+                <polygon id="Bounds" fill-opacity="0" fill="#FFFFFF" points="0.48 0 23.52 0 23.52 24 0.48 24"></polygon>
+                <g id="close" transform="translate(0.480000, 0.000000)">
+                    <path d="M4.36983782e-13,11.5255006 C4.36983782e-13,5.16014239 5.15628078,0 11.52,0 L11.52,0 C17.8823203,0 23.04,5.14860213 23.04,11.5255006 L23.04,12.4744994 C23.04,18.8398576 17.8837192,24 11.52,24 L11.52,24 C5.15767968,24 4.36983782e-13,18.8513979 4.36983782e-13,12.4744994 L4.36983782e-13,11.5255006 Z" id="Bounds" fill="#FFFFFF"></path>
+                    <g id="Group" transform="translate(6.520000, 7.000000)" fill-rule="nonzero" stroke="#211F25" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                        <line x1="5" y1="-1.42857143" x2="5" y2="11.4285714" id="Path-3" transform="translate(5.000000, 5.000000) rotate(-315.000000) translate(-5.000000, -5.000000) "></line>
+                        <line x1="-1.42857143" y1="5" x2="11.4285714" y2="5" id="Path-3" transform="translate(5.000000, 5.000000) rotate(-315.000000) translate(-5.000000, -5.000000) "></line>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

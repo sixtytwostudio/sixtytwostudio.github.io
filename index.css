@@ -1,0 +1,509 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+html {
+  font-family: 'Lato';
+}
+
+
+.xdis {
+  background: rgba(0,0,0,0.7);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.xdis__widget {
+  text-align: center;
+  background: #fff;
+  position: absolute;
+  bottom: 0;
+  width: 88%;
+  padding: 30px 24px 24px 24px;
+  border-radius: 30px 30px 0 0;
+  justify-self: flex-end;
+  margin-top: auto;
+}
+.xdis__title {
+  font: 20px/24px "gilroy", arial, sans-serif;
+}
+.xdis__button {
+  margin-top: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.xdis__button a {
+  width: 48%;
+}
+
+.xm__button {
+  background: #23f4cd;
+  border-radius: 100px;
+  display: block;
+  text-align: center;
+  padding: 12px 40px;
+  font: bold 14px/22px "gilroy", arial, sans-serif;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: #38157b;
+}
+.xm__button--outline {
+  border: 2px solid #23f4cd;
+  color: #38157b;
+  background: none;
+}
+
+.xload {
+  height: 100vh;
+  text-align: center;
+  padding-top: 150px;
+  background: url("/graphics/loading-head.svg") center top/contain no-repeat;
+  background-color: ffffff;
+
+}
+.xload img {
+  width: 180px;
+  margin: auto;
+  padding-left: 40px;
+}
+.xload__bar {
+  background: #e6f3f3;
+  border-radius: 100px;
+  height: 4px;
+  width: 120px;
+  margin: 30px auto 0;
+}
+.xload__bar span {
+  display: block;
+  width: 1px;
+  height: 100%;
+  border-radius: 100px;
+  background: #93c1c3;
+  -webkit-transition: all 1s;
+  -o-transition: all 1s;
+  transition: all 1s;
+}  
+
+}
+.xblink {
+  background: #000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  width: 100%;
+  height: 100%;
+}
+.xblink__widget {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  opacity: 0;
+  
+}
+.xblink--active {
+  -webkit-animation: xblink 3s linear forwards;
+          animation: xblink 3s linear forwards;
+}
+
+#scanCursor{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 1;
+  width: 35%;
+  height: auto;
+  align-content: center;
+}
+
+#cursorContainer {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9998;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: 200% auto, auto 100%, contain;
+  background-repeat: no-repeat;
+}
+
+#load-Image{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 1;
+  width: 50%;
+  height: auto;
+  align-content: center;
+
+}
+
+#selfieContainer {
+  position: absolute;
+    width:100%;
+    bottom: 0;
+  height: auto;
+}
+
+#santaSelfie {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: 0;
+  width: 100%;
+}
+
+#audioIconContainer
+{
+  width: 15%;
+  height: auto;
+  position: absolute;
+  top: 2vmin;
+  left: 2vmin;
+  border-radius: 50%;
+}
+#audioIcon{
+
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 15vmin;
+  height: 15vmin;
+  left: 50%;
+  top: 50%;
+
+}
+
+.audioOn{
+  background-image: url('./icons/SoundIcon_Active_@3x_new.svg');
+}
+.audioOff{
+  background-image: url('./icons/SoundIcon_Mute_@3x_new.svg');
+}
+
+h2 {
+  font-size: 1.3em;
+  text-align: center;
+  font-family: monospace;
+}
+
+#tapIcon{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 8%;
+}
+
+#scanInstructions{
+ display: block;
+  position: absolute;
+  color: white;
+  font-size: 1em;
+  line-height: 1.5;
+  text-align: center;
+  bottom: 20%;
+  width: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  z-index: 1;
+/* 
+  display: block;
+  margin: auto;
+  opacity: 1;
+  width: 100%;
+  height: auto;
+  align-content: center;
+  */
+}
+
+#scanInstructionText{
+  background-color: black;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 7%/95%;
+}
+
+#selfieInstructions{
+ display: block;
+  position: absolute;
+  color: white;
+  font-size: 1em;
+  line-height: 1.5;
+  text-align: center;
+  top: 20%;
+  width: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  z-index: 1;
+/* 
+  display: block;
+  margin: auto;
+  opacity: 1;
+  width: 100%;
+  height: auto;
+  align-content: center;
+  */
+}
+
+#selfieInstructionText{
+  background-color: black;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 7%/95%;
+}
+
+#tapInstructions{
+  display: block;
+  position: absolute;
+  color: white;
+  font-size: 1em;
+  line-height: 1.5;
+  text-align: center;
+  width: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 15vmin;
+  z-index: 1;
+}
+
+#instructionText{
+  background-color: black;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+
+#photoModeContainer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+.photo #photoModeBG {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 5;  
+  transition: 0.5s;
+}
+.a-canvas.blur {
+  filter: blur(5px);
+}
+.flash {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width:100%;
+  height:100;
+  background-color: #fff;
+  opacity: 0;
+  z-index:9999;
+}
+/*.flash #flash {
+  opacity: 1;
+  transition: 0s;
+  pointer-events: auto;
+}*/
+#photoModeImage {
+  position: absolute;
+  max-width: 65%;
+  max-height: 75%;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 3vmin;
+  opacity: 0;
+  transition: 0.5s;
+}
+.photo #photoModeImage {
+  opacity: 1;
+  transition: 0s;
+  pointer-events: auto;
+}
+#shutterButton, #closeButton, #shareButton, #retakeButton, #endSceneButton, #scanButton, #cancelButton{
+  position: absolute;
+  bottom: 2vmax;
+  border-radius: 10vmin;
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  pointer-events: auto;
+}
+#shutterButton {
+  background-image: url('./icons/camera.svg');
+  background-color: #23f4cd;
+  width: 15vmin;
+  height: 15vmin;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.photo #shutterButton {
+  display: none;
+}
+#closeButton {
+  background-image: url('./icons/close_new.svg');
+  display: none;
+ 
+  width: 16vmin;
+  height: 16vmin;
+  left: 87.5%;
+  transform: translateX(-50%);
+  top: 2.5%;
+}
+
+#endSceneButton {
+  display: block;
+  background-image: url('./icons/endscene.svg');
+  width: 64vmin;
+  height: 16vmin;
+  left: 80%;
+  transform: translateX(-50%);
+  top: .75%;
+    border-radius: 50%/100%
+
+}
+
+
+.photo #closeButton {
+  display: block;
+}
+#photoPrompts {
+  display: none;
+  bottom: 3vmax;
+  height: 15vmin;
+}
+#shareBlurb, #shareBlurbAlt {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 25vmin;
+  width: 65%;
+  color: white;
+  text-align: center;
+}
+.bold {
+  font-weight: bold;
+}
+#shareBlurbAlt {
+  display: none;
+}
+#shareButton, #retakeButton, #scanButton, #cancelButton {
+  width: 32vmin;
+  text-align: center;
+  border: 0.2em solid #23f4cd;
+  font-weight: bold;
+  line-height: 0.75;
+  font-size: 1.1em;
+}
+#shareButton p, #retakeButton p, #scanButton p, #cancelButton p {
+    pointer-events: none;
+}
+#shareButton {
+  background: #23f4cd;
+  right: 4vmax;
+  color: #38157b;
+}
+
+#scanButton {
+  display: block;
+    background: #23f4cd;
+  left: 35%;
+  right: 35%;
+  color: #38157b;
+}
+
+#cancelButton {
+  display: block;
+    background: #ffffff;
+  left: 35%;
+  right: 35%;
+  color: #38157b;
+    border: 0.2em solid #ffffff;
+}
+
+#shareButton:active, #retakeButton:active, #scanButton:active  {
+  border: 0.2em solid #38157b;
+  background: #38157b;
+  color: white;
+}
+#retakeButton {
+  background: transparent;
+  left: 4vmax;
+  color: #23f4cd;
+}
+
+
+#retakeButton.solo {
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.photo #photoPrompts {
+  display: block;
+}
+#shareBox {
+  position: absolute;
+  background-color: white;
+  width: 90%;
+  height: 20vmin;
+  bottom: 4vmin;
+  left: 50%;
+  transform: translate(-50%);
+  border-radius: 5vmin;
+  z-index: 10;
+  display: none;
+}
+#shareBox p {
+  display: inline-block;
+  background-color: blue;
+  height: 15vmin;
+  width: 15vmin;
+  border-radius: 7.5vmin;
+  margin: 0;
+  margin-left: 5.5vmin;
+  margin-top: 2.5vmin;
+  text-align: center;
+  line-height: 15vmin;
+  pointer-events: auto;
+}
+.share #shareBox {
+  display: block;
+}
+
+
+#markerLostInstruction {
+display: none;
+  position: absolute;
+  color: white;
+  font-size: 1em;
+  line-height: 1.5;
+  text-align: center;
+  bottom: 20%;
+  width: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  z-index: 1;  
+}
