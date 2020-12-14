@@ -29,6 +29,14 @@
   gtag('config', 'UA-67916101-1');
 </script>
 
+<script>
+  const uA = navigator.userAgent;
+  const vendor = navigator.vendor;
+  if (!/Safari/i.test(uA) && /iPad|iPhone|iPod/.test(uA) ){
+    alert("Oops we see you're not using the right browser! Santa’s hanging out in Safari on iOS devices so be sure to open the experience from your phone’s Safari browser.");
+  }
+  </script>
+
 
   </head>
 
