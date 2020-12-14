@@ -155,7 +155,7 @@ AFRAME.registerComponent('start-animation', {
       //   tapInstructions.style.display = 'none'
       // }
       // else { 
-        scanInstructions.style.display = 'none'
+        scanInstructions.style.display = 'block'
       // }
       selfieInstructions.style.display = 'none'
       el.addEventListener('fusing', (e) => {console.log("fusing")})
@@ -245,6 +245,7 @@ AFRAME.registerComponent('start-animation', {
       // xblink_widget.classList.add('xblink--active')
       photoFrame.style.display = "block"
       // console.log("setting selfie mode to true")
+
       marker.removeEventListener("markerFound",
           markerFoundWarning
       )
@@ -256,10 +257,18 @@ AFRAME.registerComponent('start-animation', {
       shutterButton.hidden = false
 
       selfieInstructions.style.display = 'none'
-      closeButton.style.display = 'block'
+      closeButton.style.display = 'none'
+      document.getElementById('audioIconContainer').style.display = 'none'
       for (const scene of sceneArray) {
         scene.setAttribute('visible', false)
       }
+      discardButton.addEventListener('click', sceneEnd, {once: true})
+      discardButton.addEventListener('click', (e) => {
+        song.components.sound.playSound()
+      }, {once: true})
+      // discardButton.addEventListener('click', () => {
+      //   discardButton.removeEventListener('click',sceneEnd)
+      // })
     }
     
     function isSceneActiveCheck() {
@@ -304,6 +313,7 @@ AFRAME.registerComponent('start-animation', {
             sceneAudio.setAttribute('src', audio_source)
 
             //sceneAudio.setAttribute('volume', .5)
+            sceneAudio.components.sound.currentTime = 0;
             sceneAudio.components.sound.playSound()
             // console.log("Scene audio is playing: " + sceneAudio.isPlaying)
           
@@ -373,7 +383,8 @@ AFRAME.registerComponent('start-animation', {
        isNotActive=false;
        // console.log("selfie status is = " + isSelfie)
        if(isSelfie == "true") {
-           selfieInstructions.style.display = 'block'
+          selfieInstructions.style.display = 'block'
+          song.components.sound.pauseSound()
           setTimeout(
                 function() {
                   flash()
@@ -649,7 +660,13 @@ AFRAME.registerComponent('photo-mode', {
     retakeButton.addEventListener('click', () => {
       container.classList.remove('photo')
       if(el.getAttribute('selfieMode') == "true")
-        {photoFrame.style.display = "block"}
+        {
+          photoFrame.style.display = "block"
+          // discardButton.addEventListener('click', () => {
+          //   document.getElementById("scanButton").style.display = "block"
+          //   shutterButton.hidden = true
+          // })
+        }
       closeButton.removeEventListener('click', promptKeep)
       container.classList.remove('share')
       canvas.classList.remove('blur')

@@ -5,7 +5,14 @@
 
 
   <head>
-  <script>console.log("version 1.0" + 7)</script>
+    <script>
+  const uA = navigator.userAgent;
+  const vendor = navigator.vendor;
+  if (!/Safari/i.test(uA) && /iPad|iPhone|iPod/.test(uA) ){
+    alert("Oops we see you're not using the right browser! Santa’s hanging out in Safari on iOS devices so be sure to open the experience from your phone’s Safari browser.");
+  }
+  </script>
+  <script>console.log("version 1.0" + 9)</script>
   <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
@@ -29,13 +36,7 @@
   gtag('config', 'UA-67916101-1');
 </script>
 
-<script>
-  const uA = navigator.userAgent;
-  const vendor = navigator.vendor;
-  if (!/Safari/i.test(uA) && /iPad|iPhone|iPod/.test(uA) ){
-    alert("Oops we see you're not using the right browser! Santa’s hanging out in Safari on iOS devices so be sure to open the experience from your phone’s Safari browser.");
-  }
-  </script>
+
 
 
   </head>
@@ -255,6 +256,7 @@
                     rotation = "0 90 0"
                     position = "-1.5 0 3"
                     animation__scale="startEvents: start_scene1; pauseEvents: restart_scene1; property: scale; from: 0 0 0; to: 1 1 1; dur: 250; easing: easeOutSine; delay: 8250; autoplay: false"
+                    animation__restart="startEvents: start_scene1; restart_scene1; property: scale; from: 1 1 1; to: 0 0 0; dur: 250; easing: easeOutSine; autoplay: false"
                     ></a-entity>
               </a-entity>
 
@@ -374,8 +376,7 @@
                   animation__turn="startEvents: start_scene6; pauseEvents: restart_scene6; property: rotation; dur: 3000; from: 0 0 0; to: 0 20 0; easing: easeInOutQuad; delay: 19000; autoplay: false"
                   animation__restart="startEvents: restart_scene6; property: rotation; dur: 50; from: 0 20 0; to: 0 0 0; easing: easeInOutQuad; autoplay: false"
                   animation-mixer="clip: ''">
-                    <a-entity id="phone"  position="0.7366 0.61112 -1.5423" rotation="43.213049866561825 -108.38528018930757 -102.82071408299701" animation__scale="startEvents: start_scene6; pauseEvents: restart_scene6; property: scale; dur: 500; from: 0 0 0; to: 0.2 0.4 0.05; easing: easeInOutQuad; delay: 1000"
-                    animation__retart="startEvents: restart_scene6; property: scale; dur: 500; from: 0.2 0.4 0.05; to: 0 0 0; easing: easeInOutQuad; delay: 1000">
+                    <a-entity class="scene6_model" id="phone" position="0.521 1.641 0.636" geometry="primitive: box" scale="0 0 0" rotation="15.35 21.95 0" material="color: #38157B" animation="startEvents: start_scene6; pauseEvents: restart_scene6; property: scale; dur: 500; from: 0 0 0; to: .2 .4 .05; easing: easeInOutQuad; delay: 1000;" animation__restart="startEvent: restart_scene6; property: scale; from: 0.2 .4 .05; to: 0 0 0; dur: 500;">
 
                     </a-entity>
                 </a-entity>
@@ -415,6 +416,7 @@
                   <a-entity id="bubble"
                       class="scene6_model"
                       gltf-model="#s6_bubble"
+                      scale="0 0 0"
                       animation__appear="startEvents: start_scene6; pauseEvents: restart_scene6; property: scale; dur: 500; from: 0 0 0; to: 1 1 1; easing: easeInOutQuad; delay: 1000;"
                       animation__disappear="startEvents: start_scene6; pauseEvents: restart_scene6; property: scale; dur: 500; from: 1 1 1; to: 0 0 0; easing: easeInOutQuad; delay: 29000;"
                       >
