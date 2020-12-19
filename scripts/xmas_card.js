@@ -769,7 +769,7 @@ AFRAME.registerComponent('photo-mode', {
         // console.log("adjusted ascene width: " + (frame.height*(aSceneWidth/aSceneHeight))*.75)
         //console.log("resizing canvas frame at " + new Date().toLocaleTimeString() + " ." + new Date().getMilliseconds())
         //var santaSelfie = new Image()
-        var santaSelfie = '/graphics/SantaSelfiepng.png'
+        var santaSelfie = '/graphics/santa_selfie_v6.png'
 
         //console.log("frinished resizing canvas frame at " + new Date().toLocaleTimeString() + " ." + new Date().getMilliseconds())
         frame = frame.dataUri;
@@ -783,8 +783,7 @@ AFRAME.registerComponent('photo-mode', {
               {src: frame, x: -(frame.width/3), y: 0},
               //{src: aScene, x: -(sceneWidth/2), y: 0}, 
               //TODO figure out how to get the selfie to show up correctly
-              {src: santaSelfie, x: sceneWidth-371, y: (frame.height-721)},
-              {src: '/graphics/sixtytwo_small.png', x: 0, y: (frame.height-721)}], {//, '/graphics/SantaSelfie.gif'], {
+              {src: santaSelfie, x: 0, y: (frame.height-721)}], {//, '/graphics/SantaSelfie.gif'], {
               width: sceneWidth,
               height: 721, 
               quality: 1
